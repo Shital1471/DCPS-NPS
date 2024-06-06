@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post App</title>
+    <link rel="stylesheet" href="post.css">
+</head>
+<body>
+    <div class="navbar">
+        <div><a href="index.html">Home</a></div>
+        <div><h1>Upload Post</h1></div>
+        <div class="subnavbar">
+            <div style="margin-right: 20px;"><a href="postshow.html">Show Post</a></div>
+            <div><a href="">Logout</a></div>
+        </div>
+    </div>
+    <div id="app">
+        <form id="post-form">
+            <input type="text" id="post-title" placeholder="Post Title" required>
+            <textarea id="post-content" placeholder="Write your post here..." required></textarea>
+            <input type="file" id="post-image" accept="image/*" required>
+            <button type="submit" id="posts">Create Post</button>
+        </form>
+        <div ></div>
+    </div>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+
+
+
+    
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDeEHF16yzYfnXmezIdH3HwU7I8c8EN6BI",
+           authDomain: "postupload-515e6.firebaseapp.com",
+         databaseURL: "https://postupload-515e6-default-rtdb.firebaseio.com",
+          projectId: "postupload-515e6",
+        storageBucket: "postupload-515e6.appspot.com",
+         messagingSenderId: "681377336651",
+        appId: "1:681377336651:web:1e3ac1a3d43464af1facce",
+           measurementId: "G-NMW7YFENK8"
+         };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        document.getElementById('post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+            const image = document.getElementById('post-image').files[0];
+
+            // Upload image to Firebase Storage
+            const storageRef = storage.ref(`images/${image.name}`);
+            await storageRef.put(image);
+            const imageUrl = await storageRef.getDownloadURL();
+
+            // Add post to Firestore
+            await db.collection('posts').add({
+                title: title,
+                content: content,
+                imageUrl: imageUrl,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Clear form
+            document.getElementById('post-form').reset();
+            alert('Post created successfully!');
+        });
+    </script>
+</body>
+</html>

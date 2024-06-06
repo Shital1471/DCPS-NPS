@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   
+    <meta charset="UTF-8">
+    
+    <title>Login Form | Aditya</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="styles.css">
+    <title>Registration</title>
+</head>
+
+<body>
+    <div class="wrapper">
+    <h1>Registration Form</h1>
+
+     <div class="input-box">
+          <input type="text" placeholder="Username" id="username" required>
+          <i class='bx bxs-user' ></i>
+    </div>
+
+         <div class="input-box">
+        <input type="date" id="birthdate" name="birthdate" required><br><br>
+         </div>
+
+
+
+      <div class="input-box">
+        <input type="text" placeholder="State"  id="state" name="state" required><br><br>
+        <i class='bx bx-buildings' style='color:#f7eded'  ></i>
+      </div>
+
+
+        <div class="input-box">
+        <input type="text" placeholder="District"  id="district" name="district" required><br><br>
+        <i class='bx bxs-city' style='color:#ffffff'  ></i>
+        </div>
+
+
+       <div class="input-box">
+        <input type="text"  placeholder="Subdistrict"  id="subdistrict" name="subdistrict" required><br><br>
+        <i class='bx bxs-city' style='color:#ffffff'  ></i>
+       </div>
+
+
+         <div class="input-box">
+        <input type="email"  placeholder="Email"  id="email" name="email" required><br><br>
+        <i class='bx bx-envelope' style='color:#ffffff' ></i>
+         </div>
+
+
+        <div class="input-box">
+        <input type="tel"  placeholder="Phone"  id="phone" name="phone" required><br><br>
+        <i class='bx bxs-phone' style='color:#ffffff' ></i>
+        </div>
+
+
+        <div class="input-box">
+          <input type="tel"  placeholder="Password"  id="password" name="password" required><br><br>
+          <em class="fa fa-eye"></em>
+          <em class="fa fa-eye-slash"></em>
+          </div>
+
+
+        <button type="submit" id="register" class="btn">Register</button>
+        <div class="register-link">
+          <p>I have an account? <a href="login.html">Login</a></p>
+        </div>
+    </form>
+</div>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+apiKey: "AIzaSyBp1bn7A972MrKceMphoOPKPnfoE85V8ZM",
+authDomain: "org-tez.firebaseapp.com",
+databaseURL: "https://org-tez-default-rtdb.firebaseio.com",
+projectId: "org-tez",
+storageBucket: "org-tez.appspot.com",
+messagingSenderId: "941118918125",
+appId: "1:941118918125:web:b38586106f7c50687b6be4"
+};
+
+ 
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+  
+
+
+  
+  
+   register.addEventListener('click',(e)=>{
+
+    var username = document.getElementById('username').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var phone = document.getElementById('phone').value;
+    var birthdate = document.getElementById('birthdate').value;
+    var state = document.getElementById('state').value;
+    var district = document.getElementById('district').value;
+    var subdistrict = document.getElementById('subdistrict').value;
+    
+  
+    
+   
+  
+
+
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+
+    set(ref(database, 'users/' + user.uid), { //for database
+    username: username,
+    email: email,
+    password: password,
+    phone: phone,
+    birthdate: birthdate,
+    state: state,
+    district: district,
+    subdistrict: subdistrict,
+   
+
+   
+  })
+  .then(() => {
+    alert("user created succesfully")
+  // Data saved successfully!
+  window.location.href = "home.html";
+})
+.catch((error) => {
+  // The write failed...
+  alert(error);
+});
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(errorMessage);
+    // ..
+  });
+
+
+   } );
+  
+  </script>
+</body>
+</html>
