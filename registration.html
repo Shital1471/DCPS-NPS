@@ -274,13 +274,17 @@
                   >City</label
                 >
                 <div class="mt-2">
-                  <input
+                  <!-- <input
                     type="text"
                     name="city"
                     id="city"
                     autocomplete="address-level2"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  /> -->
+
+                  <select id="city" name="city" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="">Select a city</option>
+                  </select>
                 </div>
               </div>
 
@@ -291,13 +295,17 @@
                   >State / Province</label
                 >
                 <div class="mt-2">
-                  <input
+                  <!-- <input
                     type="text"
                     name="region"
                     id="region"
                     autocomplete="address-level1"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  /> -->
+
+                  <select id="state" name="state" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="">Select a state</option>
+                  </select>
                 </div>
               </div>
 
@@ -341,19 +349,7 @@
         </div>
       </form>
     </div>
-
-    <script>
-      document
-        .getElementById("nav-toggle")
-        .addEventListener("click", function () {
-          document.getElementById("nav-menu").classList.toggle("active");
-        });
-
-      document
-        .getElementById("nav-close")
-        .addEventListener("click", function () {
-          document.getElementById("nav-menu").classList.remove("active");
-        });
-    </script>
+    <script src="registration.js"></script>
+    
   </body>
 </html>
