@@ -437,6 +437,7 @@ button{
 
 .inputBox input[type="text"],
 .inputBox input[type="email"],
+
 .inputBox textarea {
   width: 100%;
   border-radius: 5px;
@@ -445,6 +446,13 @@ button{
   font-size: 16px;
   color: #444;
   margin-bottom: 10px; /* Add margin between input fields */
+}
+.inputBox select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 16px;
 }
 
 .inputBox button {
@@ -458,6 +466,12 @@ button{
   transition: .3s;
 }
 
+
+.inputBox input:focus,
+.inputBox textarea:focus,
+.inputBox select:focus {
+    border-color: black;
+}
 .inputBox button:hover {
   background: rgb(229, 203, 6);
   transition: all 0.3s ease;

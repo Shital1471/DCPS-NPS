@@ -22,10 +22,43 @@ function submitForm(e) {
   var name = getElementVal("name");
   var emailid = getElementVal("emailid");
   var msgContent = getElementVal("msgContent");
-  var country = getElementVal("country");
+  var country = getElementVal("state");
+  let isValid = true;
 
+  if (!name) {
+    setError("name");
+   
+    isValid = false;
+  } else {
+    clearError("name");
+  }
+
+  if (!emailid || !validateEmail(emailid)) {
+    setError("emailid");
+    isValid = false;
+  } else {
+    clearError("emailid");
+  }
+
+  if (!state) {
+    setError("state");
+    isValid = false;
+  } else {
+    clearError("state");
+  }
+
+  if (!msgContent) {
+    setError("msgContent");
+    isValid = false;
+  } else {
+    clearError("msgContent");
+  }
+  if (!isValid) {
+    alert("Please fill in all fields.");
+    return;
+  }
   saveMessages(name, emailid, msgContent, country);
-
+ 
   //   enable alert
   document.querySelector(".alert").style.display = "block";
 
@@ -51,4 +84,15 @@ const saveMessages = (name, emailid, msgContent, country) => {
 
 const getElementVal = (id) => {
   return document.getElementById(id).value;
+};
+const validateEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
+  return re.test(String(email).toLowerCase());
+};
+
+const setError = (id) => {
+  document.getElementById(id).parentElement.classList.add("error");
+};
+const clearError = (id) => {
+  document.getElementById(id).parentElement.classList.remove("error");
 };
