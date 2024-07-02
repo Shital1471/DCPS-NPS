@@ -24,46 +24,51 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
-  
-  // Function to display posts
-  function displayPosts() {
-    db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
-      const postsContainer = document.getElementById('posts-container');
-      postsContainer.innerHTML = '';
-      snapshot.forEach(doc => {
-        const post = doc.data();
-        const postElement = document.createElement('div');
-        postElement.className = 'post';
-        postElement.innerHTML = `
-          <div class="image-container">
-            <img src="${post.imageUrl}" alt="Post Image" class="post-image" onerror="handleImageError(this)">
-            <div class="loading-indicator" id="loading-indicator"></div>
-          </div>
-          <h2 class="post-title">${post.title}</h2>
-          <p class="post-message">${post.content}</p>
-          <div class="post-actions">
-            <button class="like-button" onclick="likePost('${doc.id}')">
-              <i class="fas fa-thumbs-up"></i> Like <span id="like-count-${doc.id}">${post.likes || 0}</span>
-            </button>
-            <button class="comment-button" onclick="commentPost('${doc.id}')">
-              <i class="fas fa-comment"></i> Comment
-            </button>
-            <button class="share-button" onclick="sharePost('${doc.id}')">
-              <i class="fas fa-share"></i> Share
-            </button>
-          </div>
-        `;
-        postsContainer.appendChild(postElement);
+  function fetchPosts() {
+    db.collection("posts").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        renderPost(doc.data());
       });
     });
   }
+  function renderPost(postData) {
+    const postsContainer = document.getElementById('posts-container');
+    const postDiv = document.createElement('div');
+    postDiv.className = 'post';
   
-  // Function to handle image error
-  function handleImageError(image) {
-    image.src = 'default-image.jpg';
+    postDiv.innerHTML = `
+      <div class="displayname">
+        <div class="box1">
+          <div class="person-icon"><i class='bx bxs-user'></i></div>
+          <div class="user-name">${postData.email}</div>
+        </div>
+        <div class="menu-icon"><i class='bx bx-dots-horizontal-rounded'></i></div>
+      </div>
+      <div class="post-content"><img src="${postData.imageUrl}" alt="Post Image" class="post-image" onerror="handleImageError(this)">
+            <div class="loading-indicator" id="loading-indicator"></div>
+</div>
+      <div class="post-actions">
+        <div>
+           <button class="like-button"  onclick="likePost('${postData.id}')">${postData.likes === 0 ? '<i class="bx bxs-like"></i>' : `<i class="bx bxs-like"></i>`}</button>
+        <button class="dislike-button" onclick="dislikePost('${postData.id}')">${postData.dislikes === 0 ? '<i class="bx bxs-dislike"></i>' : `<i class="bx bxs-dislike"></i> `}</button>
+        </div>
+        <div>
+          <button class="share-button" onclick="sharePost('${postData.id}')"><i class='bx bxs-share'></i></button>
+          <button class="save-button" onclick="savePost('${postData.id}')"><i class='bx bxs-save'></i></button>
+        </div>
+      </div>
+      <div class="caption">${postData.title} </div>
+      <p>${postData.content}</p>
+    `;
+  
+    postsContainer.appendChild(postDiv);
   }
   
-  // Like post function
+  function handleImageError(image) {
+    image.src = 'default-image.jpg'; // Replace with your default image path
+  }
+  
+  // Function to like a post
   async function likePost(postId) {
     const postRef = db.collection('posts').doc(postId);
     const postDoc = await postRef.get();
@@ -75,22 +80,29 @@ const firebaseConfig = {
     }
   }
   
-  // Comment post function
-  function commentPost(postId) {
-    const comment = prompt('Enter your comment:');
-    if (comment) {
-      db.collection('posts').doc(postId).collection('comments').add({
-        text: comment,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  // Function to dislike a post
+  async function dislikePost(postId) {
+    const postRef = db.collection('posts').doc(postId);
+    const postDoc = await postRef.get();
+    if (postDoc.exists) {
+      const currentDislikes = postDoc.data().dislikes || 0;
+      await postRef.update({
+        dislikes: currentDislikes + 1
       });
     }
   }
   
-  // Share post function
+  // Function to save a post
+  function savePost(postId) {
+    // Implement your save logic here, for example, add to a "saved" collection or toggle save state
+    alert('Post saved successfully!');
+  }
+  
+  // Function to share a post
   function sharePost(postId) {
     alert('Post shared successfully!');
   }
-  
-
-  window.onload = displayPosts;
+  window.onload = function() {
+    fetchPosts();
+  };
   

@@ -80,15 +80,15 @@ import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-apiKey: "AIzaSyBp1bn7A972MrKceMphoOPKPnfoE85V8ZM",
-authDomain: "org-tez.firebaseapp.com",
-databaseURL: "https://org-tez-default-rtdb.firebaseio.com",
-projectId: "org-tez",
-storageBucket: "org-tez.appspot.com",
-messagingSenderId: "941118918125",
-appId: "1:941118918125:web:b38586106f7c50687b6be4"
-};
-
+          apiKey: "AIzaSyDeEHF16yzYfnXmezIdH3HwU7I8c8EN6BI",
+           authDomain: "postupload-515e6.firebaseapp.com",
+         databaseURL: "https://postupload-515e6-default-rtdb.firebaseio.com",
+          projectId: "postupload-515e6",
+        storageBucket: "postupload-515e6.appspot.com",
+         messagingSenderId: "681377336651",
+        appId: "1:681377336651:web:1e3ac1a3d43464af1facce",
+           measurementId: "G-NMW7YFENK8"
+         };
  
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -121,7 +121,7 @@ appId: "1:941118918125:web:b38586106f7c50687b6be4"
     // Signed up 
     const user = userCredential.user;
 
-    set(ref(database, 'users/' + user.uid), { //for database
+    set(ref(database, 'users' + user.uid), { //for database
     username: username,
     email: email,
     password: password,
@@ -137,7 +137,7 @@ appId: "1:941118918125:web:b38586106f7c50687b6be4"
   .then(() => {
     alert("user created succesfully")
   // Data saved successfully!
-  window.location.href = "home.html";
+  window.location.href = "post.html";
 })
 .catch((error) => {
   // The write failed...

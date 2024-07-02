@@ -6,6 +6,8 @@
   <title>Post UI</title>
   <link rel="stylesheet" href="postshow.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+   <!--=============== BOXICONS ===============-->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
 <body>
   <div class="navbar">
@@ -13,27 +15,17 @@
     <div><h2>DCPS / NPS Post</h2></div>
     <div class="menu-items">
       <a href="index.html">Home</a>
-      <a href="post.html"><i class="fas fa-edit"></i> Upload Post</a>
+      <a href="login.html"><i class="fas fa-edit"></i> Upload Post</a>
     </div>
     <div class="menu-icon">
       <i class="fas fa-bars"></i>
     </div>
   </div>
-  <div id="posts-container">
-    <!-- Example post to show the structure -->
-    <div class="post">
-      <div class="image-container">
-        <img src="example-image.jpg" alt="Example Post" />
-      </div>
-      <div class="post-title">Example Post Title</div>
-      <div class="post-message">This is an example message for the post.</div>
-      <div class="post-actions">
-        <button>Like</button>
-        <button>Comment</button>
-        <button>Share</button>
-      </div>
-    </div>
-  </div>
+  <div class="container">
+    
+    <div id="posts-container"></div>
+</div>
+  
 
   <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>

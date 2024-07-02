@@ -35,7 +35,7 @@
       </div>
       <button type="submit" id="login" class="btn">Login</button>
       <div class="register-link">
-        <p>Dont have an account? <a href="registraion.html">Registration</a></p>
+        <p>Dont have an account? <a href="registraion1.html">Registration</a></p>
       </div>
     </div>
 
@@ -57,14 +57,15 @@
 
       // Your web app's Firebase configuration
       const firebaseConfig = {
-        apiKey: "AIzaSyBp1bn7A972MrKceMphoOPKPnfoE85V8ZM",
-        authDomain: "org-tez.firebaseapp.com",
-        databaseURL: "https://org-tez-default-rtdb.firebaseio.com",
-        projectId: "org-tez",
-        storageBucket: "org-tez.appspot.com",
-        messagingSenderId: "941118918125",
-        appId: "1:941118918125:web:b38586106f7c50687b6be4",
-      };
+          apiKey: "AIzaSyDeEHF16yzYfnXmezIdH3HwU7I8c8EN6BI",
+           authDomain: "postupload-515e6.firebaseapp.com",
+         databaseURL: "https://postupload-515e6-default-rtdb.firebaseio.com",
+          projectId: "postupload-515e6",
+        storageBucket: "postupload-515e6.appspot.com",
+         messagingSenderId: "681377336651",
+        appId: "1:681377336651:web:1e3ac1a3d43464af1facce",
+           measurementId: "G-NMW7YFENK8"
+         };
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -86,7 +87,7 @@
               .then(() => {
                 alert("user logged in succesfully");
                 // Data saved successfully!
-                window.location.href = "postshow.html"; 
+                window.location.href = "post.html"; 
               })
               .catch((error) => {
                 // The write failed...
@@ -101,13 +102,14 @@
           });
       });
 
-      document.getElementById("logout").addEventListener("click", function () {
+      document.getElementById("logout").addEventListener("click", () => {
         signOut(auth)
           .then(() => {
             // Sign-out successful.
             console.log("Sign-out successful.");
             alert("Sign-out successful.");
             document.getElementById("logout").style.display = "none";
+            window.location.href = "home.html";
           })
           .catch((error) => {
             // An error happened.

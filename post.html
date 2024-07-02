@@ -61,23 +61,37 @@
             const title = document.getElementById('post-title').value;
             const content = document.getElementById('post-content').value;
             const image = document.getElementById('post-image').files[0];
-
+            const user = auth.currentUser;
             // Upload image to Firebase Storage
             const storageRef = storage.ref(`images/${image.name}`);
             await storageRef.put(image);
             const imageUrl = await storageRef.getDownloadURL();
 
             // Add post to Firestore
-            await db.collection('posts').add({
-                title: title,
-                content: content,
-                imageUrl: imageUrl,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            if (user) {
+                const email = user.email; // Use email instead of username
 
-            // Clear form
-            document.getElementById('post-form').reset();
-            alert('Post created successfully!');
+                // Upload image to Firebase Storage
+                const storageRef = storage.ref(`images/${image.name}`);
+                await storageRef.put(image);
+                const imageUrl = await storageRef.getDownloadURL();
+
+                // Add post to Firestore
+                await db.collection('posts').add({
+                    title: title,
+                    content: content,
+                    imageUrl: imageUrl,
+                    email: email, // Include user email
+                    userId: user.uid, // Include user ID
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Clear form
+                document.getElementById('post-form').reset();
+                alert('Post created successfully!');
+            } else {
+                alert('You need to be logged in to create a post');
+            }
         });
     </script>
 </body>
